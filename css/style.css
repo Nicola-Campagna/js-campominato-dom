@@ -1,0 +1,23 @@
+.grid {
+    width: 600px;
+    height: 600px;
+    /* margin: 0 auto; */
+    background-color: lightblue;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.square {
+    width: calc(100% / 10);
+    height: calc(100% / 10);
+    display: flex;
+    /* flex-wrap: wrap; */
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    background-color: lightgray;
+}
+
+.active {
+    background-color: rgb(18, 98, 196);
+}

@@ -7,10 +7,13 @@
 
 
 // CONSEGNA 2:
-//  Copiamo la griglia fatta ieri nella nuova repo e aggiungiamo la logica del gioco (attenzione: non bisogna copiare tutta la cartella dell'esercizio ma solo l'index.html, e le cartelle js/ css/ con i relativi script e fogli di stile, per evitare problemi con l'inizializzazione di git).
-// Il computer deve generare 16 numeri casuali nello stesso range della difficoltà prescelta: le bombe. Attenzione: nella stessa cella può essere posizionata al massimo una bomba, perciò nell'array delle bombe non potranno esserci due numeri uguali.
-// In seguito l'utente clicca su una cella: se il numero è presente nella lista dei numeri generati - abbiamo calpestato una bomba - la cella si colora di rosso e la partita termina. Altrimenti la cella cliccata si colora di azzurro e l'utente può continuare a cliccare sulle altre celle.
+// Il computer deve generare 16 numeri casuali nello stesso range della difficoltà prescelta: le bombe.
+//  Attenzione: nella stessa cella può essere posizionata al massimo una bomba, perciò nell'array delle bombe non potranno esserci due numeri uguali.
+// In seguito l'utente clicca su una cella: se il numero è presente nella lista dei numeri generati - abbiamo calpestato una bomba - la cella si colora di rosso e la partita termina. Altrimenti ;dela cella cliccata si colora di azzurro e l'utente può continuare a cliccare sulle altre celle.
 // La partita termina quando il giocatore clicca su una bomba o quando raggiunge il numero massimo possibile di numeri consentiti (ovvero quando ha rivelato tutte le celle che non sono bombe).
+
+
+
 
 
 
@@ -26,6 +29,15 @@ const startGame = document.getElementById("button");
 
 // numero tabelle presente nella griglia
 const numberTabs = 100;
+// numero minimo
+const minNumber = 1;
+// numero massimo
+const maxNumber = 100;
+// numero bombe
+let bombe;
+
+// richimao della funzione per generare 16 numeri random:bombe 
+// console.log((randomUniqueNumber(minNumber, maxNumber)));
 
 /****************************************
  *                                      *
@@ -63,11 +75,13 @@ function generateGridGame(grid) {
         grid.append(cella);
         // console.log(gridEl);
     }
+    bombe = generaBomba(1);
+    console.log(bombe);
 }
 
 /**
  * @param { string } testo
- * @return {HTMLElement}
+//  
  */
 
 // funzione che genera le caselle di gioco all'interno della griglia
@@ -75,13 +89,43 @@ function generaCasella(testo) {
     const cellaEl = document.createElement("div");
     cellaEl.classList.add("square");
     cellaEl.innerHTML = testo;
-
     cellaEl.addEventListener(
         "click",
         function () {
             this.classList.toggle("active");
-            console.log(this.innerHTML);
+            if (bombe.includes(parseInt(this.innerHTML))) {
+                this.classList.add("red");
+                console.log("hai cliccato una bomba:casella nunero: " + this.innerHTML);
+            }
+            else {
+                console.log("barvo");
+            }
+            // console.log(this.innerHTML);
+
+            // se l'tente clicca la cella con la corrispondiva bomba la cella diventa rosaa ed ha perso:
+            // verificare se la cella ha in corrispondiva una bomba 
+
+
         }
     )
     return cellaEl;
 }
+
+// funzione per generare 16 numeri randomi che non si ripetono
+function generaBomba(min) {
+    // array che conterrà i 16 numeri generati
+    const randomNumberBombs = [];
+    // ciclo per generare max 16 numeri random
+    while (randomNumberBombs.length < 16) {
+        const generateRandomNumber = Math.floor(Math.random() * (maxNumber - minNumber + 1) + minNumber);
+        // const bombEl = i + 1;
+        // randomNumberBombs.push(generateRandomNumber);
+        if (!randomNumberBombs.includes(generateRandomNumber)) {
+            randomNumberBombs.push(generateRandomNumber);
+        }
+    }
+    return randomNumberBombs;
+
+}
+
+
